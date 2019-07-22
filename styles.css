@@ -1,5 +1,5 @@
 body{
-    background-color: rgb(68, 68, 68);
+    background-color: white;
 }
 .grid-container{
     display: grid;
@@ -7,9 +7,13 @@ body{
     grid-template-rows: 50px 50px 50px 50px 50px 50px;
     border: 1px solid white;
     padding: 10px 10px;
-    row-gap: 1px;
-    column-gap: 1px;
+    row-gap: 0px;
+    column-gap: 0px;
     width: 200px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .grid-item{
     width: 100%;
@@ -29,10 +33,40 @@ body{
 #screen{
     grid-column: 1 / 5;
     width: 100%;
+    background-color: rgb(179, 179, 179);
+}
+#screen p{
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: right;
+    color: yellow;
+    padding-right: 10px;
+    font-size: 28px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: bold;
+    letter-spacing: .05em;
+    padding-top: 10px;
 }
 .operator{
-    background-color: purple;
+    background-color: rgb(189, 0, 189);
 }
 .number{
     background-color: yellow;
+}
+button:focus{
+    outline:0;
+}
+button:hover{
+    font-size: 110%;
+}
+button:active{
+    background-color: white;
+}
+.extra{
+    /*background-color: rgb(148, 147, 147);*/
+    background-color: black;
+    color: white;
+}
+.extra:active{
+    color: black;
 }
