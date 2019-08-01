@@ -34,7 +34,17 @@ function display(value, point){
     if(point){ // If there is a decimal point, add a decimal
         displayValue += "."
     }
-    screen.textContent = displayValue;
+    if(String(displayValue).length > 10){
+        //let sciDisplay = displayValue.toExponential();
+        let sciDisplay = displayValue.toPrecision(5);
+        screen.textContent = sciDisplay;
+
+    }
+    else{
+        screen.textContent = displayValue;
+    }
+    //screen.textContent = displayValue;
+
     console.log(displayValue);
     console.log(typeof(displayValue))
 
@@ -73,7 +83,8 @@ function backspace(){
         point = true;
     }
     if(String(displayVal).length == 1){
-        display(0);
+        //display(0);
+        displayString("");
     }
     else{
         displayVal = displayVal.slice(0, -1);
@@ -94,9 +105,14 @@ numButtons.forEach((button) => {
     button.addEventListener('click', () => {
         if(afterOp){
             clear()
+        }
+        if(!(String(displayVal).length >= 10 && afterOp == false)){ // If there are at least 10 values on the screen, don't allow more to be entered
+            addDisplay(value)
+        }
+        if(afterOp){
             afterOp = false;
         }
-        addDisplay(value);
+
     });
 });
 
@@ -188,12 +204,14 @@ function orderOfOp(listOfOp){ //A function that given a list of operations retur
 let equals = document.querySelector("#equalsButton");
 equals.addEventListener('click', () => { // Evaluates expression and displays it when equals button is clicked
     let screen = document.querySelector("#screenP");
-    //console.log(opValue);
-    //console.log(parseFloat(listVal[0]));
-    //console.log(parseFloat(displayVal));
-    listVal.push(parseFloat(displayVal));
-    //display(operate(opValue, parseFloat(listVal[0]), parseFloat(displayVal)));
-    //console.log(listVal);
+    
+    if(afterOp){ //If you press equals just after pressing an operator, remove the operator from the list
+        listVal.pop();
+    }
+    else{ //Otherwise, add the display value to the operation and value list to be calculated later
+        listVal.push(parseFloat(displayVal));
+    }
+
     if(orderOfOp(listVal) == "zeroDiv"){
         displayString("Zero Div");
     }
