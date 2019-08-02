@@ -35,19 +35,12 @@ function display(value, point){
         displayValue += "."
     }
     if(String(displayValue).length > 10){
-        //let sciDisplay = displayValue.toExponential();
         let sciDisplay = displayValue.toPrecision(5);
         screen.textContent = sciDisplay;
-
     }
     else{
         screen.textContent = displayValue;
     }
-    //screen.textContent = displayValue;
-
-    console.log(displayValue);
-    console.log(typeof(displayValue))
-
 }
 
 function displayString(value){
@@ -70,6 +63,7 @@ function addDisplay(value){ //a function that adds the value parameter to the cu
 }
 
 function clear(){ // A function that clears the display
+    console.log("Clear")
     let screen = document.querySelector("#screenP");
     screen.textContent = "";
     document.querySelector("#pointButton").disabled = false; // Enable the decimal button
@@ -97,29 +91,36 @@ backButton.addEventListener('click', () => {
     backspace();
 })
 
+function numberEvent(value){
+    if(afterOp){
+        clear()
+    }
+    if(!(String(displayVal).length >= 10 && afterOp == false)){ // If there are at least 10 values on the screen, don't allow more to be entered
+        addDisplay(value)
+    }
+    if(afterOp){
+        afterOp = false;
+    }
+}
+
 let afterOp = false; // A boolean variable to tell if an operation was just performed. Used for determining if the display should be cleared for the next input number
 
 let numButtons = document.querySelectorAll('.number');
 numButtons.forEach((button) => {
     let value = button.innerHTML;
     button.addEventListener('click', () => {
-        if(afterOp){
-            clear()
-        }
-        if(!(String(displayVal).length >= 10 && afterOp == false)){ // If there are at least 10 values on the screen, don't allow more to be entered
-            addDisplay(value)
-        }
-        if(afterOp){
-            afterOp = false;
-        }
-
+        numberEvent(value);
     });
 });
 
-let point = document.querySelector("#pointButton");
-point.addEventListener('click', () => {
+function addDecimal(){
     addDisplay(".");
     point.disabled = true; // Disable the decimal button once it is pressed (only one decimal per number)
+}
+let point = document.querySelector("#pointButton");
+point.addEventListener('click', () => {
+    addDisplay(0);
+    addDecimal();
 });
 
 let clearButton = document.querySelector('#CEButton');
@@ -201,9 +202,12 @@ function orderOfOp(listOfOp){ //A function that given a list of operations retur
     return zeroDiv ? "zeroDiv" : listOfOp[0];
 }
 
-let equals = document.querySelector("#equalsButton");
-equals.addEventListener('click', () => { // Evaluates expression and displays it when equals button is clicked
+function equalsEvent(){
     let screen = document.querySelector("#screenP");
+    if(screen.innerHTML == ""){
+        displayString("");
+        return;
+    }
     
     if(afterOp){ //If you press equals just after pressing an operator, remove the operator from the list
         listVal.pop();
@@ -217,8 +221,36 @@ equals.addEventListener('click', () => { // Evaluates expression and displays it
     }
     else{
         display(orderOfOp(listVal));
-        console.log(`From function: ${orderOfOp(listVal)}`);
+
     }
     listVal = [];
     afterOp = true;
+}
+
+function opEvent(op){
+    listVal.push(parseFloat(document.querySelector('#screenP').innerHTML));
+    listVal.push(op);
+    afterOp = true;
+}
+
+document.addEventListener('keydown', (e) => {
+    for(let i = 0; i < 10; i++){
+        if(e.key == i) numberEvent(i)
+    }
+    if(e.code == "Backspace") backspace()
+    else if(e.code == "Escape") clear()
+    else if(e.code == "Period") addDecimal()
+    else if(e.keyCode == "13"){
+        e.preventDefault();
+        equalsEvent();
+    }
+    else if(e.code == "Slash") opEvent("divide")
+    else if(e.key == "*") opEvent("multiply")
+    else if(e.code == "Minus") opEvent("subtract")
+    else if(e.key == "+") opEvent("add")
+});
+
+let equals = document.querySelector("#equalsButton");
+equals.addEventListener('click', () => { // Evaluates expression and displays it when equals button is clicked
+    equalsEvent();
 });
