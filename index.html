@@ -3,28 +3,34 @@
     <head>
         <link rel="stylesheet" href="styles.css">
         <title>Calculator</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div class="grid-container">
-            <div class="grid-item" id="screen"><p id="screenP"></p></div>
-            <div class="grid-item" id="CE"><button class="extra" id="CEButton">CE</button></div>
-            <div class="grid-item"><button class="extra" id="backspace">←</button></div>
-            <div class="grid-item"><button class="operator opF">÷</button></div>
-            <div class="grid-item"><button class="number">7</button></div>
-            <div class="grid-item"><button class="number">8</button></div>
-            <div class="grid-item"><button class="number">9</button></div>
-            <div class="grid-item"><button class="operator opF">×</button></div>
-            <div class="grid-item"><button class="number">4</button></div>
-            <div class="grid-item"><button class="number">5</button></div>
-            <div class="grid-item"><button class="number">6</button></div>
-            <div class="grid-item"><button class="operator opF">-</button></div>
-            <div class="grid-item"><button class="number">1</button></div>
-            <div class="grid-item"><button class="number">2</button></div>
-            <div class="grid-item"><button class="number">3</button></div>
-            <div class="grid-item"><button class="operator opF">+</button></div>
-            <div class="grid-item"><button class="extra" id="pointButton">.</button></div>
-            <div class="grid-item"><button class="number">0</button></div>
-            <div class="grid-item" id="equals"><button class="operator" id="equalsButton">=</button></div>
+        <div id="content">
+            <div class="grid-container">
+                <div class="grid-item" id="screen"><p id="screenP">Calculator<span class="tranSpan"></span></p></div>
+                <div class="grid-item" id="CE"><button class="extra" id="CEButton">CE</button></div>
+                <div class="grid-item"><button class="extra" id="backspace">←</button></div>
+                <div class="grid-item"><button class="operator opF">÷</button></div>
+                <div class="grid-item"><button class="number">7</button></div>
+                <div class="grid-item"><button class="number">8</button></div>
+                <div class="grid-item"><button class="number">9</button></div>
+                <div class="grid-item"><button class="operator opF">×</button></div>
+                <div class="grid-item"><button class="number">4</button></div>
+                <div class="grid-item"><button class="number">5</button></div>
+                <div class="grid-item"><button class="number">6</button></div>
+                <div class="grid-item"><button class="operator opF">-</button></div>
+                <div class="grid-item"><button class="number">1</button></div>
+                <div class="grid-item"><button class="number">2</button></div>
+                <div class="grid-item"><button class="number">3</button></div>
+                <div class="grid-item"><button class="operator opF">+</button></div>
+                <div class="grid-item"><button class="extra" id="pointButton">.</button></div>
+                <div class="grid-item"><button class="number">0</button></div>
+                <div class="grid-item" id="equals"><button class="operator" id="equalsButton">=</button></div>
+            </div>
+            <div id="footer">
+                <p class="footerText">Made with ❤️ by <a href="https://github.com/SammyCR" target = "_blank">Sammy CR</a><span id="extraTransparent"></span></p>
+            </div>
         </div>
     </body>
     <script type="text/javascript" src="scripts.js"></script>

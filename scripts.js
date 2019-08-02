@@ -71,7 +71,17 @@ function clear(){ // A function that clears the display
     let displayVal = "";
 }
 
+let newPageBool = true;
+
+function newPage(){
+    if(newPageBool == true){
+        clear();
+        newPageBool = false;
+    }
+}
+
 function backspace(){
+    newPage();
     let point = false;
     if(String(displayVal)[displayVal.length - 2] == "."){
         point = true;
@@ -92,6 +102,7 @@ backButton.addEventListener('click', () => {
 })
 
 function numberEvent(value){
+    newPage();
     if(afterOp){
         clear()
     }
@@ -119,6 +130,7 @@ function addDecimal(){
 }
 let point = document.querySelector("#pointButton");
 point.addEventListener('click', () => {
+    newPage();
     addDisplay(0);
     addDecimal();
 });
@@ -228,12 +240,14 @@ function equalsEvent(){
 }
 
 function opEvent(op){
+    newPage();
     listVal.push(parseFloat(document.querySelector('#screenP').innerHTML));
     listVal.push(op);
     afterOp = true;
 }
 
 document.addEventListener('keydown', (e) => {
+    newPage();
     for(let i = 0; i < 10; i++){
         if(e.key == i) numberEvent(i)
     }
