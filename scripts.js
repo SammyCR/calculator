@@ -215,6 +215,7 @@ function orderOfOp(listOfOp){ //A function that given a list of operations retur
 }
 
 function equalsEvent(){
+    newPage();
     let screen = document.querySelector("#screenP");
     if(screen.innerHTML == ""){
         displayString("");

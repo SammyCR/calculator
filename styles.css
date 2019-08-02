@@ -95,7 +95,8 @@ button:active{
     text-align: center;
 }
 #footer a{
-    color: blue;
+    color: rgb(70, 70, 255);
+    text-decoration: none;
 }
 #extraTransparent{
     color: transparent;
