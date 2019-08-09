@@ -228,7 +228,9 @@ function equalsEvent(){
     else{ //Otherwise, add the display value to the operation and value list to be calculated later
         listVal.push(parseFloat(displayVal));
     }
-
+    if(isNaN(listVal[0])){ //if an operation was entered first before a number
+        listVal[0] = 0;
+    }
     if(orderOfOp(listVal) == "zeroDiv"){
         displayString("Zero Div");
     }
