@@ -80,7 +80,7 @@ function newPage(){ //newPage bool is used to see if the screen was recently cle
     }
 }
 
-function backspace(){
+function backspace(){ // A function that removes the last entered value (backspace)
     newPage();
     let point = false;
     if(String(displayVal)[displayVal.length - 2] == "."){
@@ -96,12 +96,12 @@ function backspace(){
         console.log(displayVal);
     }
 }
-let backButton = document.querySelector("#backspace");
+let backButton = document.querySelector("#backspace"); // Backspace button event listener
 backButton.addEventListener('click', () => {
     backspace();
 })
 
-function numberEvent(value){
+function numberEvent(value){ // A function called when a number button or key is pressed that makes sure too many numbers aren't being entered
     newPage();
     if(afterOp){
         clear()
@@ -129,7 +129,7 @@ function addDecimal(){ // A function to add a decimal to the display
     point.disabled = true; // Disable the decimal button once it is pressed (only one decimal per number)
 }
 
-function decimalEvent(){
+function decimalEvent(){ // A function to add a decimal (and maybe a leading zero) on event trigger
     newPage();
     let screen = document.querySelector("#screenP");
     if(screen.textContent == "" || afterOp){
