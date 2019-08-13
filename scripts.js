@@ -43,7 +43,7 @@ function display(value, point){
     }
 }
 
-function displayString(value){
+function displayString(value){ // A function that will display a string on the calculator's display
     let screen = document.querySelector('#screenP');
     screen.textContent = value;
 }
@@ -73,7 +73,7 @@ function clear(){ // A function that clears the display
 
 let newPageBool = true;
 
-function newPage(){
+function newPage(){ //newPage bool is used to see if the screen was recently cleared or created
     if(newPageBool == true){
         clear();
         newPageBool = false;
@@ -124,15 +124,25 @@ numButtons.forEach((button) => {
     });
 });
 
-function addDecimal(){
+function addDecimal(){ // A function to add a decimal to the display
     addDisplay(".");
     point.disabled = true; // Disable the decimal button once it is pressed (only one decimal per number)
 }
+
+function decimalEvent(){
+    newPage();
+    let screen = document.querySelector("#screenP");
+    if(screen.textContent == "" || afterOp){
+        clear();
+        addDisplay(0);
+    }
+    addDecimal();
+    afterOp = false;
+}
+
 let point = document.querySelector("#pointButton");
 point.addEventListener('click', () => {
-    newPage();
-    addDisplay(0);
-    addDecimal();
+    decimalEvent();
 });
 
 let clearButton = document.querySelector('#CEButton');
@@ -168,7 +178,7 @@ function orderOfOp(listOfOp){ //A function that given a list of operations retur
     let i = 1;
     console.log(listOfOp);
     let zeroDiv = false;
-    while(i < listOfOp.length){
+    while(i < listOfOp.length){ // Search through operations list for multiplication and division
         if(listOfOp[i] == "multiply"){
             listOfOp[i-1] = listOfOp[i-1] * listOfOp[i+1];
             listOfOp.splice(i, 2);
@@ -191,7 +201,7 @@ function orderOfOp(listOfOp){ //A function that given a list of operations retur
         console.log(i);
     }
     i = 1;
-    while(i < listOfOp.length){
+    while(i < listOfOp.length){ // Search through operations for addition and subtraction
         if(zeroDiv == true){
             break;
         }
@@ -211,13 +221,13 @@ function orderOfOp(listOfOp){ //A function that given a list of operations retur
         console.log(listOfOp);
         console.log(i);
     }
-    return zeroDiv ? "zeroDiv" : listOfOp[0];
+    return zeroDiv ? "zeroDiv" : listOfOp[0]; // Return zeroDiv if there was an attempted zero division
 }
 
-function equalsEvent(){
+function equalsEvent(){ // A function for calculating the result when equals is pressed
     newPage();
     let screen = document.querySelector("#screenP");
-    if(screen.innerHTML == ""){
+    if(screen.innerHTML == ""){ // Prevent against error when equals button is pressed but there have been no previous operations
         displayString("");
         return;
     }
@@ -235,29 +245,29 @@ function equalsEvent(){
         displayString("Zero Div");
     }
     else{
-        display(orderOfOp(listVal));
+        display(orderOfOp(listVal)); // Display the result
 
     }
-    listVal = [];
+    listVal = []; // Clear the operation list
     afterOp = true;
 }
 
-function opEvent(op){
+function opEvent(op){ // A function to add operator to operation list
     newPage();
     listVal.push(parseFloat(document.querySelector('#screenP').innerHTML));
     listVal.push(op);
     afterOp = true;
 }
 
-document.addEventListener('keydown', (e) => {
-    newPage();
-    for(let i = 0; i < 10; i++){
+document.addEventListener('keydown', (e) => { // Event listener for keypress. Adds keyboard support to the calculator
+    newPage(); // Check if screen should be cleared if it is recently created
+    for(let i = 0; i < 10; i++){ // Add number key event listeners
         if(e.key == i) numberEvent(i)
     }
     if(e.code == "Backspace") backspace()
     else if(e.code == "Escape") clear()
-    else if(e.code == "Period") addDecimal()
-    else if(e.keyCode == "13"){
+    else if(e.code == "Period") decimalEvent()
+    else if(e.keyCode == "13"){ // Equals key event listener
         e.preventDefault();
         equalsEvent();
     }
